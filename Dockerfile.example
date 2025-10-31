@@ -1,0 +1,7 @@
+FROM python:3.11-slim
+
+RUN mkdir -p /app $ && \
+    pip install termcolor
+COPY docker_example.py /app
+WORKDIR /app
+CMD ["python", "docker_example.py"]
