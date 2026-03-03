@@ -1,0 +1,38 @@
+from clients.http.client import HTTPClient
+from httpx import Response
+from typing import TypedDict
+
+class CreateUSerRequestDict(TypedDict):
+    """
+        Клиент для взаимодействия с /api/v1/users сервиса http-gateway.
+    """
+    email: str
+    lastName: str
+    firstName: str
+    middleName: str
+    phoneNumber: str
+
+
+class UsersGatewayHTTPClient(HTTPClient):
+    """
+    Клиент для взаимодействия с /api/v1/users сервиса http-gateway.
+    """
+
+    def get_user_api(self, user_id) -> Response:
+        """
+        Получить данные пользователя по его user_id.
+
+        :param user_id: Идентификатор пользователя.
+        :return: Ответ от сервера (объект httpx.Response).
+        """
+        return self.get(f"/api/v1/users/{user_id}")
+
+    def create_user_api(self, request) -> Response:
+        """
+        Создание нового пользователя.
+
+
+        :param request: Словарь с данными нового пользователя.
+        :return: Ответ от сервера (объект httpx.Response).
+        """
+        return  self.post(f"/api/v1/users", json=request)
