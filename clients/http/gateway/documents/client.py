@@ -2,22 +2,23 @@ from httpx import Response
 
 from clients.http.client import HTTPClient
 from clients.http.gateway.client import build_gateway_http_client  # Импортируем builder
+from typing import TypedDict
 
-class DocumentDict:
+class DocumentDict(TypedDict):
     """
     Общий JSON-объект
     """
     url: str
     document: str
 
-class GetTariffDocumentResponseDict:
+class GetTariffDocumentResponseDict(TypedDict):
     """
     Для ответа по тарифу
     """
 
     tariff: DocumentDict
 
-class GetСontractDocumentResponseDict:
+class GetСontractDocumentResponseDict(TypedDict):
     """
     Для ответа по контракту
     """
