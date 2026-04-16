@@ -15,9 +15,9 @@ accounts_gateway_client = accounts_gateway_client.open_debit_card_account(user_i
 print('Open credit card:', accounts_gateway_client)
 
 # Получить документ тарифа
-document_tariff = documents_gateway_client.get_tariff_document(account_id=accounts_gateway_client['account']['id'])
+document_tariff = documents_gateway_client.get_tariff_document(account_id=accounts_gateway_client.account.id)
 print('Get tariff document:', document_tariff)
 
 # Получить документ контракта
-document_contract = documents_gateway_client.get_contract_document(account_id=accounts_gateway_client['account']['id'])
+document_contract = documents_gateway_client.get_contract_document(account_id=accounts_gateway_client.account.id)
 print('Get contract document:', document_contract)
