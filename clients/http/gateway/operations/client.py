@@ -8,12 +8,17 @@ from clients.http.gateway.operations.schema import (
     GetOperationsQuerySchema,
     GetOperationsResponseSchema,
     GetOperationsSummaryResponseSchema,
-    MakeOperationRequestSchema,
+    MakeFeeOperationRequestSchema,
+    MakeTopUpOperationRequestSchema,
+    MakeCashbackOperationRequestSchema,
+    MakeTransferOperationRequestSchema,
+    MakePurchaseOperationRequestSchema,
+    MakeBillPaymentOperationRequestSchema,
+    MakeCashWithdrawalOperationRequestSchema,
     MakeFeeOperationResponseSchema,
     MakeTopUpOperationResponseSchema,
     MakeCashbackOperationResponseSchema,
     MakeTransferOperationResponseSchema,
-    MakePurchaseOperationRequestSchema,
     MakePurchaseOperationResponseSchema,
     MakeBillPaymentOperationResponseSchema,
     MakeCashWithdrawalOperationResponseSchema
@@ -86,7 +91,7 @@ class OperationsGatewayHTTPClient(HTTPClient):
         response = self.get_operations_summary_api(query)
         return GetOperationsSummaryResponseSchema.model_validate_json(response.text)
 
-    def make_fee_operation_api(self, request: MakeOperationRequestSchema) -> Response:
+    def make_fee_operation_api(self, request: MakeFeeOperationRequestSchema) -> Response:
         """"
         Создание операции комиссии
         :return: post response
@@ -100,16 +105,14 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Новый метод создания операции комиссии
         """
-        request = MakeOperationRequestSchema(
-            status="COMPLETED",
-            amount=55.77,
+        request = MakeFeeOperationRequestSchema(
             card_id=card_id,
             account_id=account_id
         )
         response = self.make_fee_operation_api(request)
         return MakeFeeOperationResponseSchema.model_validate_json(response.text)
 
-    def make_top_up_operation_api(self, request: MakeOperationRequestSchema) -> Response:
+    def make_top_up_operation_api(self, request: MakeTopUpOperationRequestSchema) -> Response:
         """
         Создание операции пополнения
         :return: post response
@@ -123,16 +126,14 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Новый метод создания операции пополнения
         """
-        request = MakeOperationRequestSchema(
-            status="COMPLETED",
-            amount=1055.77,
+        request = MakeTopUpOperationRequestSchema(
             card_id=card_id,
             account_id=account_id
         )
         response = self.make_top_up_operation_api(request)
         return MakeTopUpOperationResponseSchema.model_validate_json(response.text)
 
-    def make_cashback_operation_api(self, request: MakeOperationRequestSchema) -> Response:
+    def make_cashback_operation_api(self, request: MakeCashbackOperationRequestSchema) -> Response:
         """
         Создание операции кэшбэка
         :return: post response
@@ -146,9 +147,7 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Новый метод создания операции кэшбэка
         """
-        request = MakeOperationRequestSchema(
-            status="COMPLETED",
-            amount=1058.74,
+        request = MakeCashbackOperationRequestSchema(
             card_id=card_id,
             account_id=account_id
         )
@@ -156,7 +155,7 @@ class OperationsGatewayHTTPClient(HTTPClient):
         return MakeCashbackOperationResponseSchema.model_validate_json(response.text)
 
 
-    def make_transfer_operation_api(self, request: MakeOperationRequestSchema) -> Response:
+    def make_transfer_operation_api(self, request: MakeTransferOperationRequestSchema) -> Response:
         """
         Создание операции перевода
         :return: post response
@@ -170,9 +169,7 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Новый метод создания операции перевода
         """
-        request = MakeOperationRequestSchema(
-            status="FAILED",
-            amount=50.74,
+        request = MakeTransferOperationRequestSchema(
             card_id=card_id,
             account_id=account_id
         )
@@ -194,16 +191,13 @@ class OperationsGatewayHTTPClient(HTTPClient):
         Новый метод создание операции покупки
         """
         request = MakePurchaseOperationRequestSchema(
-            status="COMPLETED",
-            amount=78.74,
             card_id=card_id,
             account_id=account_id,
-            category="goods"
         )
         response = self.make_purchase_operation_api(request)
         return MakePurchaseOperationResponseSchema.model_validate_json(response.text)
 
-    def make_bill_payment_operation_api(self, request: MakeOperationRequestSchema) -> Response:
+    def make_bill_payment_operation_api(self, request: MakeBillPaymentOperationRequestSchema) -> Response:
         """
         Создание операции оплаты по счету
         :return: post response
@@ -217,16 +211,14 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Новый метод создание операции оплаты по счету
         """
-        request = MakeOperationRequestSchema(
-            status="FAILED",
-            amount=70.85,
+        request = MakeBillPaymentOperationRequestSchema(
             card_id=card_id,
             account_id=account_id
         )
         response = self.make_bill_payment_operation_api(request)
         return response.json()
 
-    def make_cash_withdrawal_operation_api(self, request: MakeOperationRequestSchema) -> Response:
+    def make_cash_withdrawal_operation_api(self, request: MakeCashWithdrawalOperationRequestSchema) -> Response:
         """
         Создание операции снятия наличных денег
         :return: post response
@@ -237,9 +229,7 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Новый метод создания операции снятия наличных денег
         """
-        request = MakeOperationRequestSchema(
-            status="COMPLETED",
-            amount=78.74,
+        request = MakeCashWithdrawalOperationRequestSchema(
             card_id=card_id,
             account_id=account_id
         )
