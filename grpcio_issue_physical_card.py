@@ -18,7 +18,7 @@ from contracts.services.gateway.cards.rpc_issue_physical_card_pb2 import (
 from contracts.services.gateway.cards.cards_gateway_service_pb2_grpc import CardsGatewayServiceStub
 
 
-channel = grpc.insecure_channel("192.168.3.138:9003")
+channel = grpc.insecure_channel("localhost:9003")
 
 users_gateway_service = UsersGatewayServiceStub(channel)
 cards_gateway_service = CardsGatewayServiceStub(channel)

@@ -19,7 +19,7 @@ from contracts.services.operations.operation_pb2 import OperationStatus
 from tools.fakers import fake
 
 # Создаём gRPC-канал к сервисам, работающим на порту 9003
-channel = grpc.insecure_channel("192.168.3.138:9003")
+channel = grpc.insecure_channel("localhost:9003")
 
 # Инициализируем stubs (gRPC-клиенты)
 users_gateway_service = UsersGatewayServiceStub(channel)

@@ -21,7 +21,7 @@ from contracts.services.gateway.users.users_gateway_service_pb2_grpc import User
 from tools.fakers import fake
 
 # Устанавливаем gRPC-соединение с сервисами (предполагается, что они слушают на localhost:9003)
-channel = grpc.insecure_channel("192.168.3.138:9003")
+channel = grpc.insecure_channel("localhost:9003")
 
 # Создаём stub-объекты для взаимодействия с сервисами
 users_gateway_service = UsersGatewayServiceStub(channel)
