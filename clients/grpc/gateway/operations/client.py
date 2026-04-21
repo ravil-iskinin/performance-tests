@@ -2,6 +2,7 @@ from grpc import Channel
 from tools.fakers import fake
 from clients.grpc.client import GRPCClient
 from clients.grpc.gateway.client import build_gateway_grpc_client
+from contracts.services.operations.operation_pb2 import OperationStatus
 from contracts.services.gateway.operations.operations_gateway_service_pb2_grpc import OperationsGatewayServiceStub
 from contracts.services.gateway.operations.rpc_get_operation_pb2 import (
     GetOperationRequest,
@@ -55,7 +56,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Предоставляет высокоуровневые методы для работы со счетами.
         """
         super().__init__(channel)
-        self.stub = OperationsGatewayServiceStub()
+        self.stub = OperationsGatewayServiceStub(channel)
 
     def get_operation_api(self, request: GetOperationRequest) -> GetOperationResponse:
         """
@@ -120,7 +121,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод создание операции комиссии
         """
         request = MakeFeeOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id
@@ -138,7 +139,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод создание операции пополнения
         """
         request = MakeTopUpOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id
@@ -156,7 +157,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод создание операции кэшбэка
         """
         request = MakeCashbackOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id
@@ -174,7 +175,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод создание операции перевода
         """
         request = MakeTransferOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id
@@ -192,7 +193,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод создание операции покупки
         """
         request = MakePurchaseOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id,
@@ -211,7 +212,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод создание операции оплаты по счету
         """
         request = MakeBillPaymentOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id
@@ -229,7 +230,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод операции снятия наличных денег
         """
         request = MakeCashWithdrawalOperationRequest(
-            status=fake.proto_enum(),
+            status=fake.proto_enum(OperationStatus),
             amount=fake.amount(),
             account_id=account_id,
             card_id=card_id
