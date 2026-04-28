@@ -25,8 +25,4 @@ class OpenDebitCardAccountScenarioUser(User):
 
     @task
     def open_debit_card_account(self):
-        request = {
-            "userId": self.used_data['user']['id']
-        }
-        self.client.post("/api/v1/accounts/open-debit-card-account", json=request)
-
+        self.accounts_gateway_client.open_debit_card_account(self.create_user_response.user.id)
