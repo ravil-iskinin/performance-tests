@@ -1,13 +1,51 @@
 from httpx import Client, URL, QueryParams, Response
-from typing import Union, Optional, Any
+from typing import Union, Optional, Any, TypedDict
+
+# Тип расширений, которые можно передать в запрос
+# В нашем случае мы используем только параметр "route", но можно добавить и другие
+class HTTPClientExtensions(TypedDict, total=False):
+    """
+    Тип расширений, которые можно передать в запрос
+    В нашем случае мы используем только параметр "route", но можно добавить и другие
+    """
+    route: str
 
 class HTTPClient:
+    """
+    Базовый HTTP API клиент, принимающий объект httpx.Client.
+
+    :param client: экземпляр httpx.Client для выполнения HTTP-запросов
+    """
     def __init__(self, client: Client):
         self.client = client
-    def get(self, url: Union[URL, str], params: Optional[QueryParams] = None) -> Response:
-        return self.client.get(url, params=params)
+    def get(self,
+            url: URL | str,
+            params: QueryParams | None = None,
+            extensions: HTTPClientExtensions | None = None
+            ) -> Response:
+        """
+        Выполняет GET-запрос.
 
-    def post(self, url: Union[URL, str], json: Optional[Any] = None) -> Response:
-        return  self.client.post(url, json=json)
+        :param url: URL-адрес эндпоинта.
+        :param params: GET-параметры запроса (например, ?key=value).
+        :param extensions: Дополнительные данные, передаваемые через HTTPX extensions.
+        :return: Объект Response с данными ответа.
+        """
+        return self.client.get(url, params=params, extensions=extensions)
+
+    def post(self,
+             url: URL | str,
+             json: Any | None = None,
+             extensions: HTTPClientExtensions | None = None
+             ) -> Response:
+        """
+        Выполняет POST-запрос.
+
+        :param url: URL-адрес эндпоинта.
+        :param json: Данные в формате JSON.
+        :param extensions: Дополнительные данные, передаваемые через HTTPX extensions.
+        :return: Объект Response с данными ответа.
+        """
+        return self.client.post(url, json=json, extensions=extensions)
 
 
