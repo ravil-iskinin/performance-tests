@@ -81,7 +81,7 @@ class OperationsGatewayHTTPClient(HTTPClient):
         Новый метод получения операций по account_id
         """
         query = GetOperationsQuerySchema(account_id=account_id)
-        response = self.get_operations(query)
+        response = self.get_operations_api(query)
         return GetOperationsResponseSchema.model_validate_json(response.text)
 
     def get_operations_summary_api(self, query: GetOperationsQuerySchema) -> Response:
