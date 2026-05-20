@@ -78,4 +78,4 @@ def build_cards_gateway_locust_grpc_client(environment: Environment) -> CardsGat
     :param environment: объект окружения Locust.
     :return: экземпляр CardsGatewayGRPCClient с хуками сбора метрик.
     """
-    return CardsGatewayGRPCClient(channel=build_gateway_locust_grpc_client(Environment))
+    return CardsGatewayGRPCClient(channel=build_gateway_locust_grpc_client(environment))

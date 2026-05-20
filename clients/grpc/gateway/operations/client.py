@@ -65,11 +65,11 @@ class OperationsGatewayGRPCClient(GRPCClient):
         """
         return self.stub.GetOperation(request)
 
-    def get_operation(self, operation_id: str)-> GetOperationResponse:
+    def get_operation(self, operation_id: str) -> GetOperationResponse:
         """
         Новый метод информации об операции по operation_id
         """
-        request = GetOperationRequest(operation_id=operation_id)
+        request = GetOperationRequest(id=operation_id)
         return self.get_operation_api(request)
 
     def get_operation_receipt_api(self, request: GetOperationReceiptRequest) -> GetOperationReceiptResponse:
@@ -83,7 +83,7 @@ class OperationsGatewayGRPCClient(GRPCClient):
         Новый метод получение чека по операции по operation_id
         """
         request = GetOperationReceiptRequest(operation_id=operation_id)
-        return self.get_operation_receipt_ap(request)
+        return self.get_operation_receipt_api(request)
 
     def get_operations_api(self, request: GetOperationsRequest) -> GetOperationsResponse:
         """

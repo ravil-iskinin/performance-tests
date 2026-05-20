@@ -49,7 +49,7 @@ class GetDocumentsTaskSet(GatewayHTTPTaskSet):
     def get_contract_document(self):
         # Загружаем договор по дебетовой карте
         self.documents_gateway_client.get_contract_document(
-            account_id=self.seed_user.debit_card_accounts[0].account_id
+            account_id=self.seed_user.deposit_accounts[0].account_id
         )
 
 
