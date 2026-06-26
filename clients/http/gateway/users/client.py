@@ -1,8 +1,6 @@
-import time
-from typing import TypedDict
-
 from httpx import Response
 from locust.env import Environment
+
 from clients.http.client import HTTPClient, HTTPClientExtensions
 from clients.http.gateway.client import (
     build_gateway_http_client,
@@ -13,6 +11,8 @@ from clients.http.gateway.users.schema import (
     CreateUserRequestSchema,
     CreateUserResponseSchema
 )
+from tools.routes import APIRoutes  # Импортируем enum APIRoutes
+
 
 class UsersGatewayHTTPClient(HTTPClient):
     """
@@ -26,19 +26,21 @@ class UsersGatewayHTTPClient(HTTPClient):
         :param user_id: Идентификатор пользователя.
         :return: Ответ от сервера (объект httpx.Response).
         """
+        # Вместо /api/v1/users используем APIRoutes.USERS
         return self.get(
-            f"/api/v1/users/{user_id}",
-            extensions=HTTPClientExtensions(route="/api/v1/users/{user_id}")
+            f"{APIRoutes.USERS}/{user_id}",
+            extensions=HTTPClientExtensions(route=f"{APIRoutes.USERS}/{{user_id}}")
         )
 
-    def create_user_api(self, request:  CreateUserRequestSchema) -> Response:
+    def create_user_api(self, request: CreateUserRequestSchema) -> Response:
         """
         Создание нового пользователя.
 
-        :param request: Словарь с данными нового пользователя.
+        :param request: Pydantic-модель с данными нового пользователя.
         :return: Ответ от сервера (объект httpx.Response).
         """
-        return self.post("/api/v1/users", json=request.model_dump(by_alias=True))
+        # Вместо /api/v1/users используем APIRoutes.USERS
+        return self.post(APIRoutes.USERS, json=request.model_dump(by_alias=True))
 
     # Добавили новый метод
     def get_user(self, user_id: str) -> GetUserResponseSchema:
