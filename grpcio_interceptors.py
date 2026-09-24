@@ -11,7 +11,7 @@ class SimpleLoggingInterceptor(grpc.UnaryUnaryClientInterceptor):
         return response
 
 
-channel = grpc.insecure_channel("192.168.3.138:9003")
+channel = grpc.insecure_channel("localhost:9003")
 intercept_channel = grpc.intercept_channel(channel, *[SimpleLoggingInterceptor()])
 
 stub = UsersGatewayServiceStub(intercept_channel)
